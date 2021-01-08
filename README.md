@@ -22,6 +22,7 @@ It should now appear fine in [Arduino IDE](https://www.arduino.cc/en/Main/OldSof
 
 ## Test realised
 
+### first test 1 led /1 diode
 To check if your board/leds/photodiodes are ok, please see 
 ```
 unit_test/Blink
@@ -35,3 +36,7 @@ wiring is as follow :
 Excpected output:
 
 - Open serial monitor and you should see a low value then a high value repeatedly
+
+### test with multiplexing
+
+![](img/capture.png)

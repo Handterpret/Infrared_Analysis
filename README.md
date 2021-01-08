@@ -14,7 +14,7 @@ If you are using CH340 chip (clone of arduino Nano) please download firmware to 
 
 Download and install firmware from : 
 ```
-https://www.elegoo.com/pages/arduino-kits-support-files
+https://drive.google.com/drive/folders/1xc8l1gazUueeBtoYJpTShC4DcPErrreh
 ```
 or other depending on the brand of your nano.
 

@@ -39,4 +39,4 @@ Excpected output:
 
 ### test with multiplexing
 
-![](img/capture.png)
+![](img/infrared_circuit.png)

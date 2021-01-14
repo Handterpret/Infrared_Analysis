@@ -23,12 +23,16 @@
 */
 /*
 
+Modified on 05/01/2020
+By Florian Valade
+for Handterpret
+
 This example code has been modified from original version and is used to test 
 Led Blinking and Photodiode.
 
 Wiring to test on Arduino Nano :
-Led on GRND and D2
-Photodiode on 3.3V and A0
+Led on GRND and D2 (cathode)
+Photodiode on 3.3V (cathode) and A0
 
 Excpected output:
 Open serial monitor and you should see a low value then a high value repeatedly

@@ -1,6 +1,4 @@
-/* 
- *  This sketch run on arduino and is doing data batch through serial port
- */
+
 int outputs[4] = {6,7,8}; // pins for selecting LED
 int inputs[4] = {5,4,3}; // pins for selecting diode
 int io_pin_diode = A0;
@@ -13,6 +11,7 @@ int response_array[9][50];
 int line_to_write = 0;
 unsigned long start_time;
 unsigned long loop_timer;
+unsigned long message_num = 0;
 void setup() {
   Serial.begin(9600);
   for(int ii;ii<3;ii++){
@@ -61,21 +60,25 @@ void loop() {
     //delay(10);
   }
   else{
-    Serial.print("IR_startflag");
+    Serial.print("Message");Serial.print(message_num);
+    Serial.print(" JSON{'IR':[");
     for(int i=0;i<line_to_write;i++){
-      Serial.print("A: "); Serial.print(response_array[0][i]); Serial.print("  ");
-      Serial.print("B: "); Serial.print(response_array[1][i]); Serial.print("  ");
-      Serial.print("C: "); Serial.print(response_array[2][i]); Serial.print("  ");
-      Serial.print("D: "); Serial.print(response_array[3][i]); Serial.print("  ");
-      Serial.print("E: "); Serial.print(response_array[4][i]); Serial.print("  ");
-      Serial.print("F: "); Serial.print(response_array[5][i]); Serial.print("  ");
-      Serial.print("G: "); Serial.print(response_array[6][i]); Serial.print("  ");
-      Serial.print("H: "); Serial.print(response_array[7][i]); Serial.print("  ");
-      Serial.println("uT");
+      Serial.print("{'A':"); Serial.print(response_array[0][i]); Serial.print(", ");
+      Serial.print("'B':"); Serial.print(response_array[1][i]); Serial.print(", ");
+      Serial.print("'C':"); Serial.print(response_array[2][i]); Serial.print(", ");
+      Serial.print("'D':"); Serial.print(response_array[3][i]); Serial.print(", ");
+      Serial.print("'E':"); Serial.print(response_array[4][i]); Serial.print(", ");
+      Serial.print("'F':"); Serial.print(response_array[5][i]); Serial.print(", ");
+      Serial.print("'G':"); Serial.print(response_array[6][i]); Serial.print(", ");
+      Serial.print("'H':"); Serial.print(response_array[7][i]); Serial.print("}");
+      if(i!=line_to_write-1){
+        Serial.print(", ");
+        }
+      // Serial.print("uT");
     }
-    Serial.print("IR_endflag");
+    Serial.println("]}JSON");
     start_time = millis();
     line_to_write = 0;
-
+    message_num++;
   }
 }

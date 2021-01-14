@@ -3,6 +3,8 @@ import argparse
 import time
 import json
 import numpy as np
+import os
+import datetime
 
 parser = argparse.ArgumentParser()
 
@@ -12,16 +14,20 @@ parser.add_argument("-o", "--output", help="Where to save output data", default=
 
 args = parser.parse_args()
 
-def GetIRData(serialport, baud):
+def GetIRData(serialport, baud, output_folder):
     ser = serial.Serial(serialport, baud)
     while True:
 
         line = ser.readline()
         data = eval(str(line).split("JSON")[1])
-        ParseJsonData(data)
-        print("Done, Change position \n")
-        time.sleep(4)
-        print("Getting new data ... \n")
+        message_number = str(line).split('Message')[1].split('JSON')[0]
+        print(f"Message : {message_number}")
+        retrieved_data = ParseJsonData(data)
+        np.save(os.path.join(output_folder, f"{message_number.replace(' ', '')}-{str(datetime.datetime.now().timestamp())}.npy"),retrieved_data)
+        print("Getting new data ... ")
+        time.sleep(1)
+        print("Done change position")
+
 
 def ParseJsonData(json_data):
     """Parse Json from arduino
@@ -55,4 +61,4 @@ def ParseJsonData(json_data):
     return slices_array
 
 if __name__ == "__main__":
-    GetIRData(args.serial, args.baud)
+    GetIRData(args.serial, args.baud, args.output)

@@ -20,6 +20,19 @@ or other depending on the brand of your nano.
 
 It should now appear fine in [Arduino IDE](https://www.arduino.cc/en/Main/OldSoftwareReleases) under tools => port
 
+
+## Docker
+
+For easier use you can use Docker:
+
+```
+docker build -t infrared_analysis ./Docker/
+docker run -it --rm -v src:/opt/ infrared_analysis /bin/bash
+```
+
+WIP: To get data inside docker you need to mount usb serial (depends on host os)
+
+
 ## Test realised
 
 ### first test 1 led /1 diode

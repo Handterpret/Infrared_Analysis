@@ -13,10 +13,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--serial", default="COM7", help="Serial port to connect to for instance COM3 on windows or /dev/ttyUSB0 on Linux")
 parser.add_argument("-b", "--baud", help="Baud rate for reading serial port", default="9600")
 parser.add_argument("--model_path", help="Where model is saved", default=".")
+parser.add_argument("--dataset_path", help="Where dataset is saved", default=None)
 
 args = parser.parse_args()
 
-def InferIRData(serialport, baud, model_folder):
+def InferIRData(serialport, baud, model_folder, dataset_path):
+    if dataset_path:
+        labels_name = os.listdir(dataset_path)
     ser = serial.Serial(serialport, baud)
     model = keras.models.load_model(model_folder)
     while True:
@@ -26,7 +29,10 @@ def InferIRData(serialport, baud, model_folder):
         message_number = str(line).split('Message')[1].split('JSON')[0]
         print(f"Message : {message_number}")
         retrieved_data = ParseJsonData(data)
-        print(f"result : {model.predict(tf.expand_dims(retrieved_data, axis=0))}\n")
+        if dataset_path:
+            print(f"result : {labels_name[tf.argmax(model.predict(tf.expand_dims(retrieved_data, axis=0)))]}\n")
+        else:
+            print(f"result : {model.predict(tf.expand_dims(retrieved_data, axis=0))}\n")
 
 def ParseJsonData(json_data):
     """Parse Json from arduino
@@ -61,4 +67,4 @@ def ParseJsonData(json_data):
 
 
 if __name__ == "__main__":
-    InferIRData(args.serial, args.baud, args.model_path)
+    InferIRData(args.serial, args.baud, args.model_path, args.dataset_path)

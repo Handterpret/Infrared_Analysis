@@ -30,7 +30,7 @@ def InferIRData(serialport, baud, model_folder, dataset_path):
         print(f"Message : {message_number}")
         retrieved_data = ParseJsonData(data)
         if dataset_path:
-            print(f"result : {labels_name[tf.argmax(model.predict(tf.expand_dims(retrieved_data, axis=0)))]}\n")
+            print(f"result : {labels_name[tf.argmax(model.predict(tf.expand_dims(retrieved_data, axis=0))[0])]}\n")
         else:
             print(f"result : {model.predict(tf.expand_dims(retrieved_data, axis=0))}\n")
 
